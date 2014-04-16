@@ -205,9 +205,10 @@ model.addAttribute("noofpages",1);
 	@RequestMapping(value="/deleteadminuser", method=RequestMethod.GET)
 	public String removeadminuser(@RequestParam("id") String admin_id,ModelMap model, Principal principal) {
 	
+	
 		List<String> participant_id=new ArrayList<String>();
-		String provider_name=adminuserDAO.get_pname(admin_id);
-		participant_id=adminuserDAO.getpariticpantidby_pname(provider_name);
+		String provider_name=adminuserDAO.get_pname(admin_id);		
+		participant_id=adminuserDAO.getpariticpantidby_pname(provider_name);	
 		for (String participantid: participant_id) {
 			mainDAO.deleteParticipant(participantid,provider_name);
 		}	

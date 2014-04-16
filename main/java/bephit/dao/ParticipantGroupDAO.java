@@ -198,14 +198,31 @@ public class ParticipantGroupDAO {
 	    	int enabled=1;
 	    	int updateemail=1;
 	    	int local_age;
+	    List<String> participant_id=new ArrayList<String>();
+	    
 	    	/*if(Integer.parseInt(pgroups.getgroup_scope())==0)
 	    	local_age=0;
 	    	else
 	    		local_age=Integer.parseInt(pgroups.getlocal_age());*/
 	    	 //System.out.println(dateFormat.format(date));
 	    	//String cmd="INSERT INTO users(`FULLNAME`,`USERNAME`,`PASSWORD`,`ENABLED`,`EMAIL`,`PROFILE_IMAGE`,`UPDATEBYEMAIL`) VALUES('"+user.getFullName()+"','"+user.getUsername()+"','"+user.getPassword()+"','"+enabled+"','"+user.getEmail()+"','empty','"+updateemail+"')";
-          String cmd_pgroups="delete from participant_group_table where group_id='"+group_id+"'";
-         logger.info(cmd_pgroups);
+        resultSet=statement.executeQuery("select participant_id from participant_group where group_id='"+group_id+"'");
+	    while(resultSet.next())
+	    {
+	    participant_id.add(resultSet.getString("participant_id"));
+	    }
+	    for(String participantid:participant_id)
+	    {
+	    	statement.execute("delete from participant_message_log where Participant_id='"+participantid+"'");
+	    	statement.execute("UPDATE participants_table SET group_name ='' WHERE participants_id='"+participantid+"'");
+	    	logger.info("delete from participant_message_log where Participant_id='"+participantid+"'");
+	    }
+	    statement.execute("delete from participant_group where group_id='"+group_id+"'");
+	    statement.execute("delete from  broad_cast_table where group_id='"+group_id+"'");
+	   
+	    	String cmd_pgroups="delete from participant_group_table where group_id='"+group_id+"'";
+       //  statement.executeUpdate("delete from participant_group_table where group_id='"+group_id+"'");
+          logger.info(cmd_pgroups);
 			statement.execute(cmd_pgroups);
 			/*String Desc="Deleted Groups"+pgroups.getgroup_name();*/
 			flag=1;
