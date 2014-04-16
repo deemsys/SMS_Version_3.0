@@ -2,6 +2,7 @@ package bephit.controllers;
  
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -204,9 +205,14 @@ model.addAttribute("noofpages",1);
 	@RequestMapping(value="/deleteadminuser", method=RequestMethod.GET)
 	public String removeadminuser(@RequestParam("id") String admin_id,ModelMap model, Principal principal) {
 	
+		List<String> participant_id=new ArrayList<String>();
+		String provider_name=adminuserDAO.get_pname(admin_id);
+		participant_id=adminuserDAO.getpariticpantidby_pname(provider_name);
+		for (String participantid: participant_id) {
+			mainDAO.deleteParticipant(participantid,provider_name);
+		}	
 		int status=adminuserDAO.deleteAdminUser(admin_id,principal.getName());//.deleteParticipant(participant_id);
-		
-        model.addAttribute("success","true");
+		model.addAttribute("success","true");
 		AdminUserForm adminuserForm = new AdminUserForm();
 		adminuserForm.setAdminuser(adminuserDAO.getAdminUser());
         model.addAttribute("adminuserForm",adminuserForm);

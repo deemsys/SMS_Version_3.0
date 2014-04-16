@@ -403,6 +403,49 @@ public class AdminUserDAO {
 	
 	//get particular user
 	
+	
+	public String get_pname(String admin_id) {
+
+		Connection con = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			con = dataSource.getConnection();
+			statement = con.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String adminuser="";
+
+		try
+		{
+			
+			resultSet = statement.
+					executeQuery("select * from admin_log_table where admin_id='"+admin_id+"'");
+			
+			logger.info("select * from admin_log_table where admin_id='"+admin_id+"'");
+			while (resultSet.next()) {
+				adminuser=resultSet.getString("admin_username");
+			
+		                  }
+		} 
+		catch (Exception ex) 
+		{
+			logger.info(ex.toString());
+			releaseResultSet(resultSet);
+	    	releaseStatement(statement);
+	    	releaseConnection(con);
+		} 
+		finally 
+		{
+			releaseResultSet(resultSet);
+	    	releaseStatement(statement);
+	    	releaseConnection(con);	
+	    	
+		}
+
+		return adminuser;
+	}
 	public List<AdminUser> getAdminUser(String admin_id) {
 
 		Connection con = null;
@@ -454,6 +497,8 @@ public class AdminUserDAO {
 	}
 	
 	
+	
+	
 	public int deleteAdminUser(String admin_id, String adminuser) {
 
 		Connection con = null;
@@ -488,12 +533,15 @@ public class AdminUserDAO {
 			String userroles="delete from user_roles where USER_ID='"+login_id+"'";
 			logger.info(userroles);
 			String login="delete from login where username='"+adminusername+"'";
-			logger.info(login);
+			logger.info(login);		
+		
 			statement.execute("delete from user_roles where USER_ID='"+login_id+"'");
 			
 			statement.execute("delete from login where username='"+adminusername+"'");
 			
 			statement.execute("delete from admin_log_table where admin_id='"+admin_id+"'");
+			
+			
 			flag=1;
 		/*	if(resultSet.next())*/
 			/*	Desc=Desc+adminusername;
@@ -522,6 +570,49 @@ public class AdminUserDAO {
 			return 1;
 		else
 			return 0;
+	}
+	
+	public List<String> getpariticpantidby_pname(String admin_username) {
+
+		Connection con = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			con = dataSource.getConnection();
+			statement = con.createStatement();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		List<String> adminuser = new ArrayList<String>();
+
+		try
+		{
+			
+			resultSet = statement.
+					executeQuery("select participants_id from participants_table where Provider_name='"+admin_username+"'");
+			
+			logger.info("select participants_id from participants_table where Provider_name='"+admin_username+"'");
+			while (resultSet.next()) {
+				adminuser.add(resultSet.getString("participants_id"));
+			
+		                  }
+		} 
+		catch (Exception ex) 
+		{
+			logger.info(ex.toString());
+			releaseResultSet(resultSet);
+	    	releaseStatement(statement);
+	    	releaseConnection(con);
+		} 
+		finally 
+		{
+			releaseResultSet(resultSet);
+	    	releaseStatement(statement);
+	    	releaseConnection(con);	
+	    	
+		}
+
+		return adminuser;
 	}
 	
 	
