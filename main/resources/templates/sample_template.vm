@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<body>
+
+
+Welcome to the adherence project!<br/>
+Your Username is <font style="color:blue">${userName}</font> and your Password is <font style="color:blue">${password}</font>. After you download the App, you can use the Username and Password to log in.
+<br/>
+<br/>
+<br/>
+Thank You.
+
+</body>
+</html>
