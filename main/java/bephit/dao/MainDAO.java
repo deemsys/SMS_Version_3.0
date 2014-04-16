@@ -1523,13 +1523,22 @@ public class MainDAO {
 			String cmd_activity;
 			if (resultSet.next())
 				Desc = Desc + resultSet.getString(1);
-			String messagelog="delete from participant_message_log where Participant_id='"+ participant_id + "'";
+			
+			//1.Delete from message log table
+				String messagelog="delete from participant_message_log where Participant_id='"+ participant_id + "'";
+				
+				
 			statement.execute(messagelog);
 			
+			//2.Delete From group mapping table
 			String participant_group="delete from participant_group where participant_id='"+ participant_id + "'";
+			
 			statement.execute(participant_group);
 			
+			
 			String selectedparticipantusername = "select username from participants_table where participants_id='"	+ participant_id + "'";
+			
+			
 			String participantusername="",user_id="";
 			logger.info("username"+selectedparticipantusername);
 			ResultSet resultSet1=statement.executeQuery(selectedparticipantusername);
@@ -1544,13 +1553,17 @@ public class MainDAO {
 			{
 				user_id=resultSet2.getString("login_id");
 			}
-						
+			//3.Delete from user roles table			
 			String user_roles="delete from user_roles where USER_ID='"+user_id+"'";
 			statement.execute(user_roles);
 			logger.info(user_roles);
+			
+			//4.Delete from login table[important]
 			String login="delete from login where username='"+participantusername+ "'";
 			statement.execute(login);
 			logger.info(login);
+			
+			
 			logger.info("select log_id from weekly_logs where participant_id='"+ participant_id + "'");
 			
 			ResultSet resultset4=statement.executeQuery("select log_id from weekly_logs where participant_id='"+ participant_id + "'"); 
@@ -1568,16 +1581,25 @@ public class MainDAO {
 			for (String week_id : weeklog_id) {
 				
 				logger.info("Delete from weekly answers"+week_id);
+				
+				//5.Delete from weekly answers
 				statement.execute("delete from weekly_answers where log_id='"+week_id+"'");	
 				
 			}
 			
+			//6.Delete from weekly logs
 			statement.execute("delete from weekly_logs where participant_id='"+participant_id+ "'");
 			
+			//7.Delete from participant table
 			String participant_table="delete from participants_table where participants_id='"+ participant_id + "'";
 			statement.execute(participant_table);
 			logger.info(participant_table);	
 			
+			
+			//8.Delete from weekly audio
+			String cmd_delete_weekly_audio="Delete from weekly_audio where participant_id='"+participant_id+"'";
+			statement.execute(cmd_delete_weekly_audio);
+			logger.info(cmd_delete_weekly_audio);
 			
 		
 			cmd_activity = "insert into admin_log_activity_table(admin_id,ip_address,admin_date_time,admin_desc,done_by) values('"+admin+"','"+IP.getHostAddress()+"','"+dateFormat.format(date)+"','"+Desc+"','"+userName+"')";
