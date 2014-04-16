@@ -521,6 +521,7 @@ public class StreamDetailsDAO
 				 streamname=resultSet.getString("stream_name");
 			statement.execute("delete from stream where stream_id='"+stream_id+"'");
 			statement.execute("delete from message_stream where stream_id='"+stream_id+"'");
+			System.out.println("aaaaaa");
 			String Desc="Deleted Stream" +streamname;
 			String cmd_activity="insert into admin_log_activity_table(admin_id,ip_address,admin_date_time,admin_desc,done_by) values('"+admin+"','"+IP.getHostAddress()+"','"+dateFormat.format(date)+"','"+Desc+"','"+admin+"')";
 			logger.info(cmd_activity);
@@ -528,9 +529,18 @@ public class StreamDetailsDAO
 			 
 			flag=1;
 			}
-			
-			
-			
+			List <String> broad_id=new ArrayList<String>();
+			String bid="select broad_id from broad_cast_table where stream_id='"+stream_id+"'";
+			resultSet=statement.executeQuery(bid);
+			while(resultSet.next()){
+				broad_id.add(resultSet.getString("broad_id"));
+				System.out.println("broad_id"+broad_id);
+			}
+			for (String broadid : broad_id) {
+				statement.execute("delete from participant_message_log where broad_id='"+broadid+"'");
+				
+			}
+			statement.execute("delete from broad_cast_table where stream_id='"+stream_id+"'");
 	    }
 			catch(Exception e){
 				logger.info(e.toString());
@@ -553,6 +563,7 @@ public class StreamDetailsDAO
 	   		
 	}
 	
+		
 
 	public List<StreamDetails> getlimitedstream(int page) {
 		Connection con = null;
