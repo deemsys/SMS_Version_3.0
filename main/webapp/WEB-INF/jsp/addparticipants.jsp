@@ -692,19 +692,19 @@ var $in = $zipcode;
 					<br/>
 												</td>
 											</tr>
-				
-                
-                <tr><td><input type="hidden" id="Provider_name" name="Provider_name" value="<sec:authentication property="principal.username" />"></tr>
-
-<tr><td><p class="quck-txt">Group</p></td></tr>
-<tr class="row1"><td colspan="2"><p style=" line-height: 18px; padding: 1px 0pt; text-align: justify; color:#3D3D5C;" >Group is the internal classification for the better understanding of Participant's Demographics.<!-- <a href="addparticipantgroups" onclick="javascript:CreateGroup()">[Create New Group]</a> --></p></td></tr>
 <tr class="row1">
 												<td valign="middle" align="left" class="input_txt">
 													 Start Date :</td>
 												<td valign="top" align="left" class="input_txt" >
 												<input type="text" name="startdate" id="datepicker" value="${addparticipants.startdate}" class="input_txtbx1">
 												</td>
-											</tr>
+											</tr>				
+                
+                <tr><td><input type="hidden" id="Provider_name" name="Provider_name" value="<sec:authentication property="principal.username" />"></tr>
+
+<tr><td><p class="quck-txt">Group</p></td></tr>
+<tr class="row1"><td colspan="2"><p style=" line-height: 18px; padding: 1px 0pt; text-align: justify; color:#3D3D5C;" >Group is the internal classification for the better understanding of Participant's Demographics.<!-- <a href="addparticipantgroups" onclick="javascript:CreateGroup()">[Create New Group]</a> --></p></td></tr>
+
 
 
     <tr class="row2">

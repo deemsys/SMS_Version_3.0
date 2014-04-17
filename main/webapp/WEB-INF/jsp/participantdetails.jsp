@@ -97,7 +97,7 @@
                 <tr class="row1">
                   <td width="15%" valign="middle" align="left" > Age</td>
                     <td width="1%" valign="middle" align="left" >  :</td>
-                  <td width="84%" valign="top" align="left" >${participantsDetails.age}</td>
+                  <td width="84%" valign="top" align="left" ><c:if test="${participantsDetails.age ne 'null'}"><c:out value="${participantsDetails.age}"></c:out></c:if></td>
                 </tr>
               <tr class="row2">
                   <td width="15%" valign="middle" align="left" > Date Of Join </td>

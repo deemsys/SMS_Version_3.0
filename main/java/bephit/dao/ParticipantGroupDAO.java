@@ -229,6 +229,7 @@ public class ParticipantGroupDAO {
 	 }
 	    catch(Exception e){
 	    	logger.info(e.toString());
+	    	
 	    	releaseStatement(statement);
 	    	releaseConnection(con);
 	    	flag=0;

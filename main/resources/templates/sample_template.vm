@@ -4,7 +4,7 @@
 
 
 Welcome to the adherence project!<br/>
-Your Username is <font style="color:blue">${userName}</font> and your Password is <font style="color:blue">${password}</font>. After you download the App, you can use the Username and Password to log in.
+Your UserID is <font style="color:blue">${userName}</font> and Your Password is <font style="color:blue">${password}</font>.
 <br/>
 <br/>
 <br/>

@@ -484,26 +484,29 @@ public class MainDAO {
 		    
 		    logger.info("passwordgeneration"+pw);
 			 
+		   
 			 
 			 
 			 //end generate random password			
 			
 			//insert into role table
 			String cmd_login="insert into login(username,password,email_id,secondary_email,role,status) values('"+participant.getUsername()+"','"+pw+"','"+participant.getEmail_id()+"','null',0,1)";
-			
+			 statement.execute(cmd);
+			statement.execute(cmd_login);
 			/*statement.execute(cmd);*/
 			
-			String cmd_getid="SELECT LAST_INSERT_ID() as lastid";
+			String cmd_getid="SELECT login_id from login where username='"+participant.getUsername()+"'";
 			logger.info(cmd_login);
 			/*String Desc="added adminuser"+admin_id;
 			String cmd_activity="insert into admin_log_activity_table(admin_id,ip_address,admin_date_time,admin_desc) values('"+admin_id+"','127.0.0.1','"+dateFormat.format(date)+"','"+Desc+"')";
 			System.out.println(cmd_activity);
-			*/resultSet=statement.executeQuery(cmd_getid);
+			*/
+			resultSet=statement.executeQuery(cmd_getid);
 			resultSet.next();
-			int lastinsertedid=Integer.parseInt(resultSet.getString("lastid"));
+			int lastinsertedid=Integer.parseInt(resultSet.getString("login_id"));
 		
 			String cmd_role="insert into user_roles(user_id,authority) values('"+lastinsertedid+"','ROLE_USER')";
-				
+			statement.execute(cmd_role);	
 			//end insert
 			try
 			{
@@ -515,7 +518,7 @@ public class MainDAO {
 		    logger.info("--After Sent--");
 		    
 		    try{
-		    	 String body="Welcome to the adherence project! /n Your username is : "+participant.getUsername()+" and your password is : "+pw+" After you download the app, you can use the username and password to log in.";
+		    	String body="Welcome to the adherence project!  Your UserID is '"+participant.getUsername()+"' and Your Password is '"+pw+"'.";
 		    	 
 		      	messageSender.sendSMS(participant.getMobile_num(), "Adherence Project Password :"+body);
 		     }catch(Exception e){
@@ -543,9 +546,7 @@ public class MainDAO {
 				
 				
 			}*/
-			statement.execute(cmd);
-			statement.execute(cmd_login);
-			statement.execute(cmd_role);
+			
 			logger.info("insertcmd"+cmd);
 			
 			resultSet= statement.executeQuery("select  max(participants_id) as participant from participants_table;");
@@ -735,16 +736,18 @@ public class MainDAO {
 			//insert into role table
 			String cmd_login="insert into login(username,password,email_id,secondary_email,role,status) values('"+participant.getUsername()+"','"+participant.getPassword()+"','"+participant.getEmail_id()+"','null',0,1)";
 			
+			statement.execute(cmd);
+			statement.execute(cmd_login);
 			/*statement.execute(cmd);*/
 			
-			String cmd_getid="SELECT LAST_INSERT_ID() as lastid";
+			String cmd_getid="SELECT login_id from login where username='"+participant.getUsername()+"'";
 			logger.info(cmd_login);
 			/*String Desc="added adminuser"+admin_id;
 			String cmd_activity="insert into admin_log_activity_table(admin_id,ip_address,admin_date_time,admin_desc) values('"+admin_id+"','127.0.0.1','"+dateFormat.format(date)+"','"+Desc+"')";
 			System.out.println(cmd_activity);
 			*/resultSet=statement.executeQuery(cmd_getid);
 			resultSet.next();
-			int lastinsertedid=Integer.parseInt(resultSet.getString("lastid"));
+			int lastinsertedid=Integer.parseInt(resultSet.getString("login_id"));
 		
 			String cmd_role="insert into user_roles(user_id,authority) values('"+lastinsertedid+"','ROLE_USER')";
 				
@@ -759,7 +762,7 @@ public class MainDAO {
 		    logger.info("--After Sent--");
 		    
 		    try{
-		    	 String body="Welcome to the adherence project! /n Your username is : "+participant.getUsername()+" and your password is : "+participant.getPassword()+" After you download the app, you can use the username and password to log in.";
+		    	 String body="Welcome to the adherence project!  Your UserID is '"+participant.getUsername()+"' and Your Password is '"+participant.getPassword()+"'.";
 		    	 
 		      	messageSender.sendSMS(participant.getMobile_num(), "Adherence Project Password :"+body);
 		     }catch(Exception e){
@@ -786,8 +789,7 @@ public class MainDAO {
 				
 				
 			}*/
-			statement.execute(cmd);
-			statement.execute(cmd_login);
+			
 			statement.execute(cmd_role);
 			resultSet= statement.executeQuery("select  max(participants_id) as participant from participants_table;");
 			String participants="";

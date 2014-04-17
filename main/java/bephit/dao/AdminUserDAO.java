@@ -127,7 +127,7 @@ public class AdminUserDAO {
      */ 
    
     try{
-    	  String body="Welcome to the adherence project! /n Your username is : "+adminuser.getAdmin_username()+" and your password is : "+pw+" After you download the app, you can use the username and password to log in.";
+    	  String body="Welcome to the adherence project!  Your UserID is '"+adminuser.getAdmin_username()+"' and Your Password is '"+pw+"'.";
     	 
       	messageSender.sendSMS(adminuser.getAdmin_mobile(), "Adherence Project Password :"+body);
      }catch(Exception e){e.printStackTrace();
